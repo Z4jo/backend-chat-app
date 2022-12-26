@@ -14,19 +14,28 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class UserController {
-private UserService ur;
-private JpaUserDetailsService jpaUserDetailsService;
+	private UserService ur;
+	private JpaUserDetailsService jpaUserDetailsService;
+
+
 	@PostMapping("/register/user")
-	public HttpStatus registerUser(@RequestBody User user){
+	public HttpStatus registerUser(@RequestBody User user) {
 		System.out.println(user.toString());
 		return ur.createUser(user);
 	}
+
 	@GetMapping("/get/users")
-	public ArrayList<User> getUsers(){
+	public ArrayList<User> getUsers() {
 		return ur.getUsers();
 	}
+
 	@GetMapping("/get/user/{name}")
-	public SecurityUser getUser(@PathVariable String name){
+	public SecurityUser getUser(@PathVariable String name) {
 		return jpaUserDetailsService.loadUserByUsername(name);
+	}
+
+	@GetMapping("/get/user/login")
+	public String getUserLogin() {
+		return "OK";
 	}
 }
