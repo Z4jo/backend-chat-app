@@ -24,7 +24,7 @@ public class SecurityConfig {
 				.csrf().disable()
 				.addFilterAt(usernamePasswordFilter,UsernamePasswordAuthenticationFilter.class)
 				.addFilterAfter(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
-				.authorizeRequests().mvcMatchers("/get/users").permitAll()
+				.authorizeRequests().mvcMatchers("/register/user").permitAll()
 				.and()
 				.authorizeRequests().mvcMatchers("/**").authenticated()
 				.and()

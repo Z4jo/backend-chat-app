@@ -6,12 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "userDb")
+@Table(name = "user_db")
 @Getter
 @Setter
 public class User implements Serializable {
@@ -26,8 +27,14 @@ public class User implements Serializable {
 	@Column (name = "password", nullable = false)
 	private String password;
 
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private Collection<Chat> chats = new ArrayList<>();
+
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.MERGE, optional = false)
+	@JoinColumn(name = "authority_authority_id", nullable = false)
+	private Authority authority;
 
 }

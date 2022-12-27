@@ -4,8 +4,11 @@ import com.example.backendchatapp.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
@@ -28,7 +31,10 @@ public class SecurityUser implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(()->"read");
+		SecurityAuthority securityAuthority = new SecurityAuthority(user.getAuthority());
+		ArrayList<SecurityAuthority> ret = new ArrayList<>();
+		ret.add(securityAuthority);
+		return ret;
 	}
 
 	@Override

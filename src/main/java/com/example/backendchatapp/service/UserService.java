@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -19,8 +20,9 @@ public class UserService {
 		return HttpStatus.CREATED;
 	}
 
-	public ArrayList<User> getUsers() {
-		return	(ArrayList<User>) uRepo.findAll();
+
+	public List<UserRepository.NamesAndId> getUsersBySubstring(String substring) {
+		return uRepo.findAllByUserNameContaining(substring).stream().toList();
 	}
 
 }
