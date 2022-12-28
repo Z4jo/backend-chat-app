@@ -1,9 +1,8 @@
 package com.example.backendchatapp.config.security.filter;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.backendchatapp.config.security.authentication.JwtAuthToken;
-import com.example.backendchatapp.config.security.manager.JwtAuthenticationManager;
+import com.example.backendchatapp.config.security.manager.JwtAuthManager;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,7 +15,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	private JwtAuthenticationManager jwtAuthenticationManager;
+	private JwtAuthManager jwtAuthManager;
 	private final String HEADER_NAME = "authorization";
 
 	@Override
@@ -28,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			String jwt = request.getHeader(HEADER_NAME).substring(7);
 			var a = new JwtAuthToken(jwt);
 			try{
-				var finalAuth = jwtAuthenticationManager.authenticate(a);
+				var finalAuth = jwtAuthManager.authenticate(a);
 				SecurityContextHolder.getContext().setAuthentication(finalAuth);
 				response.setStatus(HttpServletResponse.SC_ACCEPTED);
 				filterChain.doFilter(request,response);

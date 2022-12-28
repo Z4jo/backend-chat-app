@@ -20,18 +20,23 @@ public class UserController {
 	private JpaUserDetailsService jpaUserDetailsService;
 
 
-	@PostMapping("/register")
+	@PostMapping("/public/register")
 	public HttpStatus registerUser(@RequestBody User user) {
 		System.out.println(user.toString());
 		return ur.createUser(user);
 	}
 
-	@GetMapping("/login")
+	@GetMapping("/private/login")
 	public String getUserLogin() {
 		return "OK";
 	}
-	@GetMapping("/get/users/by/{substring}")
+
+	@GetMapping("/private/get/users/by/{substring}")
 	public List<UserRepository.NamesAndId> getUsersBySubstring(@PathVariable String substring){
 		return ur.getUsersBySubstring(substring);
+	}
+	@GetMapping("/public/get/users")
+	public List<User>getAllUsers(){
+		return ur.getAllUsers();
 	}
 }
