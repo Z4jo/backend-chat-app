@@ -1,5 +1,6 @@
 package com.example.backendchatapp.config.security.provider;
 
+import com.example.backendchatapp.config.security.SecurityUser;
 import com.example.backendchatapp.config.security.authentication.UsernamePasswordAuthToken;
 import com.example.backendchatapp.service.JpaUserDetailsService;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,10 @@ public class UsernamePasswordProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		UsernamePasswordAuthToken usernamePasswordAuthToken = (UsernamePasswordAuthToken) authentication;
-		UserDetails userDetails = userDetailsService.loadUserByUsername(usernamePasswordAuthToken.getName());
+		SecurityUser userDetails = userDetailsService.loadUserByUsername(usernamePasswordAuthToken.getName());
 		//TODO: compare by hashing the password from user to hash in database
 		if(userDetails.getPassword().equals(usernamePasswordAuthToken.getPassword())){
+			usernamePasswordAuthToken.setAuthorities(userDetails.getAuthorities());
 			usernamePasswordAuthToken.setAuthenticated(true);
 			return usernamePasswordAuthToken;
 		}else{

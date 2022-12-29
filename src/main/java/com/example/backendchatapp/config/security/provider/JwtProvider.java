@@ -1,6 +1,9 @@
 package com.example.backendchatapp.config.security.provider;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.backendchatapp.config.security.SecurityUser;
+import com.example.backendchatapp.entity.User;
+import com.example.backendchatapp.service.JpaUserDetailsService;
 import com.example.backendchatapp.service.JwtService;
 import com.example.backendchatapp.config.security.authentication.JwtAuthToken;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import java.time.ZonedDateTime;
 public class JwtProvider implements AuthenticationProvider {
 
 	private final JwtService jwtService;
+	private final JpaUserDetailsService jpaUserDetailsService;
 
 
 	@Override
@@ -24,9 +28,9 @@ public class JwtProvider implements AuthenticationProvider {
 		JwtAuthToken auth = (JwtAuthToken) authentication;
 		DecodedJWT decodedToken = jwtService.decoder(auth.getJWT());
 		ZonedDateTime timeNow = ZonedDateTime.now();
-		System.out.println(decodedToken.getExpiresAtAsInstant());
-		System.out.println(timeNow.toInstant());
+		SecurityUser user =jpaUserDetailsService.loadUserByUsername(decodedToken.getSubject());
 		if (decodedToken.getExpiresAtAsInstant().isAfter(timeNow.toInstant())){
+			auth.setAuthorities(user.getAuthorities());
 			auth.setAuthenticated(true);
 			return auth;
 		}else {

@@ -35,7 +35,7 @@ public class UserController {
 	public List<UserRepository.NamesAndId> getUsersBySubstring(@PathVariable String substring){
 		return ur.getUsersBySubstring(substring);
 	}
-	@GetMapping("/public/get/users")
+	@GetMapping("/admin/get/users")
 	public List<User>getAllUsers(){
 		return ur.getAllUsers();
 	}

@@ -12,10 +12,15 @@ import java.util.Collection;
 public class UsernamePasswordAuthToken implements Authentication {
 	private boolean authenticated;
 	private final String USERNAME;
-    private final String password;
+    private final String PASSWORD;
+	private Collection<? extends  GrantedAuthority> authorities;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return authorities;
+	}
+
+	public void setAuthorities(Collection<? extends  GrantedAuthority> authorities){
+		this.authorities = authorities;
 	}
 
 	@Override
@@ -44,7 +49,7 @@ public class UsernamePasswordAuthToken implements Authentication {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.PASSWORD;
 	}
 
 	@Override
