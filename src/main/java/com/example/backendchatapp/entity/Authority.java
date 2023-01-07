@@ -20,7 +20,6 @@ public class Authority {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "authority_id", nullable = false)
 	private Long authority_id;
-//TODO:opravit název column
 	@Column(name = "name_of_authority",nullable = false)
 	private String nameOfAuthority;
 

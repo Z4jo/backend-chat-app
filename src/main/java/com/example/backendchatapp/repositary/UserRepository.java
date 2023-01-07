@@ -10,7 +10,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	Optional<User> findByUserName(String UserName);
 	Collection<NamesAndId> findAllByUserNameContaining(String substringOfUsername);
 
-	 interface NamesAndId{
+	void deleteByUserName(String name);
+
+	interface NamesAndId{
 		Long getId();
 		String getUserName();
 	}

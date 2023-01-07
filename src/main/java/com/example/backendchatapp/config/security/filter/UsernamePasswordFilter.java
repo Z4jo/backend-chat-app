@@ -17,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 @Component
 @AllArgsConstructor
@@ -35,6 +37,7 @@ public class UsernamePasswordFilter extends OncePerRequestFilter {
 			if(request.getHeader(HEADER_NAME)!=null&&request.getHeader(HEADER_NAME).contains("Basic")) {
 				String[] header = request.getHeader(HEADER_NAME).split(" ");
 				String[] usernamePassword = new String(Base64.getDecoder().decode(header[1])).split(":");
+				System.out.println(usernamePassword[0]);
 				var a = new UsernamePasswordAuthToken(usernamePassword[0], usernamePassword[1]);
 				//TODO:EXCEPTIONS
 				try {

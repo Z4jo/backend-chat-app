@@ -2,7 +2,9 @@ package com.example.backendchatapp.controller;
 
 import com.example.backendchatapp.config.security.manager.JwtAuthManager;
 import com.example.backendchatapp.entity.User;
+import com.example.backendchatapp.repositary.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.SerializationUtils;
 
+import java.util.Random;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,20 +30,23 @@ class UserControllerTest {
 	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	@Autowired
 	private MockMvc mockMvc;
+	@Autowired
+	private UserRepository userRepository;
 
 	@WithMockUser(value = "spring")
 	@Test
 	@DisplayName("when calling /user/public/register endpoint we expect 201 CREATED")
 	void registerUser() throws Exception{
 		User user = new User();
-		user.setUserName("Test3");
-		user.setPassword("Test3");
+		user.setUserName("test");
+		user.setPassword("test");
 		mockMvc.perform(post("/user/public/register")
 						.content(asJsonString(user))
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON)
 				)
 				.andExpect(status().isOk());
+
 	}
 
 	@Test

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials ="true")
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/user")
@@ -25,7 +25,6 @@ public class UserController {
 		System.out.println(user.toString());
 		return ur.createUser(user);
 	}
-
 	@GetMapping("/private/login")
 	public String getUserLogin() {
 		return "OK";
@@ -35,7 +34,7 @@ public class UserController {
 	public List<UserRepository.NamesAndId> getUsersBySubstring(@PathVariable String substring){
 		return ur.getUsersBySubstring(substring);
 	}
-	@GetMapping("/admin/get/users")
+	@GetMapping("/public/get/users")
 	public List<User>getAllUsers(){
 		return ur.getAllUsers();
 	}
